@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --main-color: #79b3ff;
+  --sub-color: #aed1ff;
+}
 * {
   padding: 0;
   margin: 0;
@@ -11,4 +15,31 @@
 body {
   background: #111;
   color: white;
+}
+
+a.active {
+  color: var(--sub-color);
+}
+
+a {
+  transition: 300ms;
+  -webkit-transition: 300ms;
+  -moz-transition: 300ms;
+  -ms-transition: 300ms;
+  -o-transition: 300ms;
+}
+
+a:hover {
+  color: var(--main-color);
+}
+input {
+  background-color: #333;
+  @apply rounded-sm;
+}
+input:focus {
+  outline: none;
+}
+
+input::placeholder {
+  color: #ccc;
 }

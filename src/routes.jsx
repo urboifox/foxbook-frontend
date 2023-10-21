@@ -3,8 +3,9 @@ import {
   GlobalLayout,
   HomePage,
   LoginPage,
-  PostPage,
   RegisterPage,
+  UserPage,
+  UsersPage,
 } from "./components/";
 
 const router = createBrowserRouter([
@@ -24,10 +25,13 @@ const router = createBrowserRouter([
         path: "/login",
         element: <LoginPage />,
       },
-
       {
-        path: "/:postId",
-        element: <PostPage />,
+        path: "/users",
+        element: <UsersPage />,
+      },
+      {
+        path: "/users/:userId",
+        element: <UserPage />,
       },
     ],
   },
