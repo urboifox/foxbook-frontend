@@ -1,4 +1,5 @@
 import axios from "axios";
+import { useState } from "react";
 import { PrimaryButton } from "../../";
 import useForm from "../../../hooks/useForm";
 import { API_LINK } from "../../../constants";
@@ -13,6 +14,8 @@ export default function LoginForm() {
     password: "",
   });
 
+  const [loading, setLoading] = useState(false);
+
   const navigate = useNavigate();
 
   const dispatch = useDispatch();
@@ -23,6 +26,7 @@ export default function LoginForm() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setLoading(true);
     axios
       .post(`${API_LINK}/api/users/login`, data)
       .then(({ data }) => {
@@ -38,7 +42,10 @@ export default function LoginForm() {
       .catch((err) => {
         console.log(err.response.data.message);
       })
-      .finally(() => resetForm());
+      .finally(() => {
+        setLoading(false);
+        resetForm();
+      });
   };
 
   return (
@@ -62,7 +69,12 @@ export default function LoginForm() {
         name="password"
         id="password"
       />
-      <PrimaryButton>Login</PrimaryButton>
+      <PrimaryButton
+        className={`${loading ? "opacity-50" : ""}`}
+        loading={loading}
+      >
+        {loading ? "Loggin in..." : "Login"}
+      </PrimaryButton>
     </form>
   );
 }

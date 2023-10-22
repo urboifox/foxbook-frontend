@@ -4,14 +4,17 @@ import { PrimaryButton } from ".";
 import axios from "axios";
 import useForm from "../hooks/useForm";
 import { objectToFormData } from "../lib/objectToFormData";
+import { useRef, useState } from "react";
 
-export default function CreatePost() {
+export default function CreatePost({ fetchPosts }) {
   const userData = useSelector((state) => state.user.data);
+  const [loading, setLoading] = useState(false);
+  const image = useRef(null);
 
   const { data, handleChange, resetForm } = useForm({
     title: "",
     content: "",
-    image: null,
+    // image: null,
     user: {
       firstName: userData.firstName,
       lastName: userData.lastName,
@@ -23,9 +26,10 @@ export default function CreatePost() {
   });
 
   const handleSubmit = (e) => {
+    setLoading(true);
     e.preventDefault();
-
-    const formData = objectToFormData(data);
+    let formData;
+    formData = objectToFormData(data);
 
     axios
       .post(`${API_LINK}/api/posts`, formData, {
@@ -36,7 +40,12 @@ export default function CreatePost() {
       .catch((err) => {
         console.log(err.response.data.message);
       })
-      .finally(() => resetForm());
+      .finally(() => {
+        setLoading(false);
+        resetForm();
+        fetchPosts();
+        image.current.value = "";
+      });
   };
 
   return (
@@ -76,10 +85,16 @@ export default function CreatePost() {
         onChange={(e) => handleChange(e)}
         name="image"
         id="image"
+        accept="image/*"
+        ref={image}
         className="cursor-pointer text-neutral-400"
       />
-      <PrimaryButton className="w-40" onClick={() => {}}>
-        Add Post
+      <PrimaryButton
+        className={`w-40 ${loading ? "opacity-50" : ""}`}
+        loading={loading}
+        onClick={() => {}}
+      >
+        {`${loading ? "Posting..." : "Add Post"}`}
       </PrimaryButton>
     </form>
   );

@@ -24,7 +24,8 @@ export default function Post({ post, fetchPosts }) {
     }
   };
 
-  const isAdmin = useSelector((state) => state.user.data.role === "admin");
+  const isAdmin = useSelector((state) => state.user.data?.role === "admin");
+  const isMine = post.user._id === useSelector((state) => state.user.data?._id);
 
   return (
     <article className="bg-neutral-800 p-5 flex flex-col gap-4 rounded-md">
@@ -47,7 +48,7 @@ export default function Post({ post, fetchPosts }) {
             </span>
           </div>
         </div>
-        {isAdmin && (
+        {(isAdmin || isMine) && (
           <div
             onClick={() => handlePostDelete()}
             className="group cursor-pointer"

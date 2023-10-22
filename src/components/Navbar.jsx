@@ -11,11 +11,11 @@ export default function Navbar() {
   return (
     <header className="container mx-auto px-4 py-10 flex items-center justify-between">
       <Link to={"/"} className="hover:text-white text-3xl font-light">
-        PoX
+        Foxbook
       </Link>
       <nav className="flex gap-5">
         <NavLink to={"/"}>Home</NavLink>
-        {!user._id ? (
+        {!user?._id ? (
           <>
             <NavLink to={"/register"}>Register</NavLink>
             <NavLink to={"/login"}>Login</NavLink>

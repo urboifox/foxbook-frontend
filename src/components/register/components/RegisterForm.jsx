@@ -4,6 +4,7 @@ import useForm from "../../../hooks/useForm";
 import { API_LINK } from "../../../constants";
 import { useNavigate } from "react-router-dom";
 import { objectToFormData } from "../../../lib/objectToFormData";
+import { useState } from "react";
 
 export default function RegisterForm() {
   const { data, handleChange, resetForm } = useForm({
@@ -12,12 +13,13 @@ export default function RegisterForm() {
     email: "",
     password: "",
     age: "",
-    avatar: null,
   });
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setLoading(true);
 
     const formData = objectToFormData(data);
 
@@ -29,7 +31,10 @@ export default function RegisterForm() {
       .catch((err) => {
         console.log(err.response.data.message);
       })
-      .finally(() => resetForm());
+      .finally(() => {
+        setLoading(false);
+        resetForm();
+      });
   };
 
   return (
@@ -92,7 +97,12 @@ export default function RegisterForm() {
         id="avatar"
       />
 
-      <PrimaryButton>Create account</PrimaryButton>
+      <PrimaryButton
+        className={`${loading ? "opacity-50" : ""}`}
+        loading={loading}
+      >
+        {`${loading ? "Registering..." : "Register"}`}
+      </PrimaryButton>
     </form>
   );
 }
