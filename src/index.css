@@ -32,14 +32,17 @@ a {
 a:hover {
   color: var(--main-color);
 }
-input {
+input,
+textarea {
   background-color: #333;
-  @apply rounded-sm;
+  @apply rounded-sm py-3 px-4;
 }
-input:focus {
+input:focus,
+textarea:focus {
   outline: none;
 }
 
-input::placeholder {
+input::placeholder,
+textarea::placeholder {
   color: #ccc;
 }

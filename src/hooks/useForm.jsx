@@ -1,17 +1,24 @@
 import { useState } from "react";
 
-export default function useForm(initialValues) {
-  const [data, setData] = useState(initialValues || {});
+const useForm = (initialState) => {
+  const [data, setData] = useState(initialState);
 
   const handleChange = (e) => {
-    setData((prevData) => ({
-      ...prevData,
-      [e.target.name]: e.target.value,
-    }));
+    if (e.target.type === "file") {
+      setData({
+        ...data,
+        [e.target.name]: e.target.files[0],
+      });
+    } else {
+      setData({
+        ...data,
+        [e.target.name]: e.target.value,
+      });
+    }
   };
 
   const resetForm = () => {
-    setData(initialValues || {});
+    setData(initialState);
   };
 
   return {
@@ -19,4 +26,6 @@ export default function useForm(initialValues) {
     handleChange,
     resetForm,
   };
-}
+};
+
+export default useForm;

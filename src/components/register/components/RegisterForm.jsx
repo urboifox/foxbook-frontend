@@ -2,10 +2,8 @@ import axios from "axios";
 import { PrimaryButton } from "../../";
 import useForm from "../../../hooks/useForm";
 import { API_LINK } from "../../../constants";
-import getUserData from "../../../lib/getUserData";
-import { useDispatch } from "react-redux";
-import { setUser } from "../../../redux/slices/userDataSlice";
 import { useNavigate } from "react-router-dom";
+import { objectToFormData } from "../../../lib/objectToFormData";
 
 export default function RegisterForm() {
   const { data, handleChange, resetForm } = useForm({
@@ -13,30 +11,20 @@ export default function RegisterForm() {
     lastName: "",
     email: "",
     password: "",
-    age: null,
+    age: "",
+    avatar: null,
   });
-
   const navigate = useNavigate();
-
-  const dispatch = useDispatch();
-
-  const handleSetUserData = (user) => {
-    dispatch(setUser(user));
-  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    const formData = objectToFormData(data);
+
     axios
-      .post(`${API_LINK}/api/users/login`, data)
-      .then(({ data }) => {
-        const token = data.data.token;
-        localStorage.setItem("JWT", token);
-      })
+      .post(`${API_LINK}/api/users/register`, formData)
       .then(() => {
-        getUserData().then((user) => handleSetUserData(user));
-      })
-      .then(() => {
-        navigate("/");
+        navigate("/login");
       })
       .catch((err) => {
         console.log(err.response.data.message);
@@ -46,15 +34,46 @@ export default function RegisterForm() {
 
   return (
     <form
+      encType="multipart/form-data"
       onSubmit={(e) => handleSubmit(e)}
       className="flex flex-col gap-5 max-w-xl mx-auto"
     >
+      <input
+        value={data.firstName}
+        onChange={(e) => handleChange(e)}
+        placeholder="First name"
+        type="text"
+        name="firstName"
+        id="firstName"
+        required
+      />
+      <input
+        value={data.lastName}
+        onChange={(e) => handleChange(e)}
+        placeholder="Last name"
+        type="text"
+        name="lastName"
+        id="lastName"
+        required
+      />
+      <input
+        value={data.age}
+        onChange={(e) => handleChange(e)}
+        max={100}
+        min={18}
+        placeholder="Age"
+        type="number"
+        name="age"
+        id="age"
+        required
+      />
       <input
         value={data.email}
         onChange={(e) => handleChange(e)}
         placeholder="Email"
         type="email"
         name="email"
+        required
         id="email"
       />
       <input
@@ -64,8 +83,16 @@ export default function RegisterForm() {
         type="password"
         name="password"
         id="password"
+        required
       />
-      <PrimaryButton>Login</PrimaryButton>
+      <input
+        onChange={(e) => handleChange(e)}
+        type="file"
+        name="avatar"
+        id="avatar"
+      />
+
+      <PrimaryButton>Create account</PrimaryButton>
     </form>
   );
 }

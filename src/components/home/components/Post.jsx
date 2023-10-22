@@ -43,7 +43,7 @@ export default function Post({ post, fetchPosts }) {
               post.user.firstName || ""
             } ${post.user.lastName || ""}`}</Link>
             <span className=" text-xs text-neutral-400">
-              {post.date.split("T")[1].split(".")[0].substring(0, 5)}
+              {`${new Date(post.date).toUTCString()}`}
             </span>
           </div>
         </div>

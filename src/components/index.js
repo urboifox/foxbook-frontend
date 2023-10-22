@@ -6,9 +6,10 @@ import RegisterPage from "./register/RegisterPage";
 import UsersPage from "./users/UsersPage";
 import UserPage from "./user/UserPage";
 import PrimaryButton from "./PrimaryButton";
-
+import CreatePost from "./CreatePost";
 export {
   GlobalLayout,
+  CreatePost,
   PrimaryButton,
   UserPage,
   LoginPage,
