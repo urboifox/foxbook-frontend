@@ -4,7 +4,10 @@ import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { setUser } from "../../redux/slices/userDataSlice";
 import getUserData from "../../lib/getUserData";
-
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import "react-loading-skeleton/dist/skeleton.css";
+import { SkeletonTheme } from "react-loading-skeleton";
 export default function GlobalLayout() {
   const dispatch = useDispatch();
 
@@ -20,8 +23,11 @@ export default function GlobalLayout() {
 
   return (
     <>
-      <Navbar />
-      <Outlet />
+      <SkeletonTheme baseColor="#202020" highlightColor="#444">
+        <Navbar />
+        <ToastContainer position="bottom-right" />
+        <Outlet />
+      </SkeletonTheme>
     </>
   );
 }

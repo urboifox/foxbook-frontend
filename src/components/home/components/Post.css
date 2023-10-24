@@ -1,0 +1,4 @@
+.modal-container::before {
+  content: "";
+  @apply w-full h-full bg-neutral-950 opacity-75 left-0 top-0 absolute -z-10;
+}

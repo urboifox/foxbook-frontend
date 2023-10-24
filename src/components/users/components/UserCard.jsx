@@ -18,14 +18,12 @@ export default function UserCard({ user, fetchUsers }) {
             Authorization: `Bearer ${localStorage.getItem("JWT")}`,
           },
         })
-        .then(() => {
-          fetchUsers();
-        })
         .catch((error) => {
           console.error(`Error deleting user: ${error.message}`);
         })
         .finally(() => {
           setDeleting(false);
+          fetchUsers();
         });
     }
   };
@@ -34,7 +32,7 @@ export default function UserCard({ user, fetchUsers }) {
     <article
       className={`${
         deleting && "opacity-50"
-      } w-44 relative p-4 rounded-md items-center text-center flex gap-2 flex-col group bg-neutral-800`}
+      } relative p-4 rounded-md items-center text-center flex gap-2 flex-col group bg-neutral-800`}
     >
       {isAdmin && (
         <span
@@ -49,7 +47,7 @@ export default function UserCard({ user, fetchUsers }) {
       </span>
       <Link
         className="flex flex-col items-center gap-2"
-        to={`${API_LINK}/users/${user._id}`}
+        to={`/users/${user._id}`}
       >
         <img
           className="w-20 aspect-square object-cover rounded-full"

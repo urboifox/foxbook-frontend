@@ -11,7 +11,7 @@ export default function Navbar() {
   return (
     <header className="container mx-auto px-4 py-10 flex items-center justify-between">
       <Link to={"/"} className="hover:text-white text-3xl font-light">
-        Foxbook
+        <span className="text-main-100">Fox</span>book
       </Link>
       <nav className="flex gap-5">
         <NavLink to={"/"}>Home</NavLink>

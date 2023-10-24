@@ -5,6 +5,7 @@ import { API_LINK } from "../../../constants";
 import { useNavigate } from "react-router-dom";
 import { objectToFormData } from "../../../lib/objectToFormData";
 import { useState } from "react";
+import { toast } from "react-toastify";
 
 export default function RegisterForm() {
   const { data, handleChange, resetForm } = useForm({
@@ -28,6 +29,7 @@ export default function RegisterForm() {
       .then(() => {
         navigate("/login");
       })
+      .then(() => toast.info(`Account created!`))
       .catch((err) => {
         console.log(err.response.data.message);
       })
@@ -65,7 +67,7 @@ export default function RegisterForm() {
         value={data.age}
         onChange={(e) => handleChange(e)}
         max={100}
-        min={18}
+        min={10}
         placeholder="Age"
         type="number"
         name="age"

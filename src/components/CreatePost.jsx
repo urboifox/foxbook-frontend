@@ -5,6 +5,8 @@ import axios from "axios";
 import useForm from "../hooks/useForm";
 import { objectToFormData } from "../lib/objectToFormData";
 import { useRef, useState } from "react";
+import { toast } from "react-toastify";
+import { Link } from "react-router-dom";
 
 export default function CreatePost({ fetchPosts }) {
   const userData = useSelector((state) => state.user.data);
@@ -14,22 +16,16 @@ export default function CreatePost({ fetchPosts }) {
   const { data, handleChange, resetForm } = useForm({
     title: "",
     content: "",
-    // image: null,
+    date: Date.now(),
     user: {
-      firstName: userData.firstName,
-      lastName: userData.lastName,
-      email: userData.email,
-      role: userData.role,
-      avatar: userData.avatar,
-      _id: userData._id,
+      ...userData,
     },
   });
 
   const handleSubmit = (e) => {
     setLoading(true);
     e.preventDefault();
-    let formData;
-    formData = objectToFormData(data);
+    const formData = objectToFormData(data);
 
     axios
       .post(`${API_LINK}/api/posts`, formData, {
@@ -37,8 +33,12 @@ export default function CreatePost({ fetchPosts }) {
           Authorization: `Bearer ${localStorage.getItem("JWT")}`,
         },
       })
+      .then(() => {
+        toast.success(`Post created successfully`);
+      })
       .catch((err) => {
         console.log(err.response.data.message);
+        toast.error(`Error while creating post`);
       })
       .finally(() => {
         setLoading(false);
@@ -55,11 +55,13 @@ export default function CreatePost({ fetchPosts }) {
       encType="multipart/form-data"
     >
       <div className="flex items-center gap-4">
-        <img
-          className="w-10 aspect-square rounded-full object-cover"
-          src={`${API_LINK}/uploads/${userData.avatar}`}
-          alt={`${userData.firstName} image`}
-        />
+        <Link to={`/users/${userData._id}`}>
+          <img
+            className="w-10 aspect-square rounded-full object-cover"
+            src={`${API_LINK}/uploads/${userData.avatar}`}
+            alt={`${userData.firstName} image`}
+          />
+        </Link>
         <input
           onChange={(e) => handleChange(e)}
           required

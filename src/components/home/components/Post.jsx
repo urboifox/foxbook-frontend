@@ -4,16 +4,24 @@ import { CloseIcon } from "../../icons";
 import axios from "axios";
 import { useState } from "react";
 import { useSelector } from "react-redux";
+import { toast } from "react-toastify";
+import "./Post.css";
 export default function Post({ post, fetchPosts }) {
   // console.log(post);
   const [deleting, setDeleting] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
   const handlePostDelete = () => {
     if (!deleting) {
       setDeleting(true);
       axios
         .delete(`${API_LINK}/api/posts/${post._id}`)
         .then(() => {
-          fetchPosts();
+          if (fetchPosts) {
+            fetchPosts();
+          }
+        })
+        .then(() => {
+          toast.success(`Post deleted successfully`);
         })
         .catch((error) => {
           console.error(`Error deleting post: ${error.message}`);
@@ -66,6 +74,7 @@ export default function Post({ post, fetchPosts }) {
         <p className="mt-2 font-normal text-neutral-300">{post.content}</p>
         {post.image && (
           <img
+            onClick={() => setModalOpen(true)}
             className="mt-5 rounded-md h-60 w-full object-cover"
             loading="lazy"
             src={`${API_LINK}/uploads/${post.image}`}
@@ -73,6 +82,22 @@ export default function Post({ post, fetchPosts }) {
           />
         )}
       </figure>
+
+      {modalOpen && (
+        <div
+          onClick={() => setModalOpen(false)}
+          className="w-full h-full modal-container fixed top-0 left-0 flex items-center justify-center"
+        >
+          <div className="md:w-1/2 bg-neutral-800 p-5 rounded-md">
+            <img
+              onClick={() => setModalOpen(false)}
+              className="max-w-full"
+              src={`${API_LINK}/uploads/${post.image}`}
+              alt={`${post.title} image`}
+            />
+          </div>
+        </div>
+      )}
     </article>
   );
 }
