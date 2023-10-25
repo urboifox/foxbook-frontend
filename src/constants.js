@@ -1,3 +1,3 @@
-const API_LINK = "http://localhost:3000";
+const API_LINK = "https://foxbook.onrender.com/";
 
 export { API_LINK };
