@@ -25,7 +25,7 @@ export default function GlobalLayout() {
     <>
       <SkeletonTheme baseColor="#202020" highlightColor="#444">
         <Navbar />
-        <ToastContainer position="bottom-right" />
+        <ToastContainer position="bottom-right" pauseOnHover={false} />
         <Outlet />
       </SkeletonTheme>
     </>

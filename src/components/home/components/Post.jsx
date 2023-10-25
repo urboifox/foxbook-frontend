@@ -1,6 +1,6 @@
 import { API_LINK } from "../../../constants";
 import { Link } from "react-router-dom";
-import { CloseIcon } from "../../icons";
+import { CloseIcon, EditIcon } from "../../icons";
 import axios from "axios";
 import { useState } from "react";
 import { useSelector } from "react-redux";
@@ -56,18 +56,27 @@ export default function Post({ post, fetchPosts }) {
             </span>
           </div>
         </div>
-        {(isAdmin || isMine) && (
-          <div
-            onClick={() => handlePostDelete()}
-            className="group cursor-pointer"
-          >
-            <CloseIcon
-              className={`${
-                deleting ? "opacity-50" : ""
-              } fill-white group-hover:fill-red-600 transition-colors w-6`}
-            />
-          </div>
-        )}
+        <div className="flex items-center gap-2">
+          {isMine && (
+            <Link to={`/posts/edit/${post._id}`} className="cursor-pointer">
+              <EditIcon
+                className={`stroke-white w-5 transition-colors duration-200 hover:stroke-main-100`}
+              />
+            </Link>
+          )}
+          {(isAdmin || isMine) && (
+            <div
+              onClick={() => handlePostDelete()}
+              className="group cursor-pointer"
+            >
+              <CloseIcon
+                className={`${
+                  deleting ? "opacity-50" : ""
+                } fill-white group-hover:fill-red-600 transition-colors w-6`}
+              />
+            </div>
+          )}
+        </div>
       </header>
       <figure>
         <h2 className="font-semibold text-main-100">{post.title}</h2>

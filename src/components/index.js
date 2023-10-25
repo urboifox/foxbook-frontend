@@ -9,8 +9,12 @@ import PrimaryButton from "./PrimaryButton";
 import CreatePost from "./CreatePost";
 import PostSkeleton from "./PostSkeleton";
 import UserCardSkeleton from "./UserCardSkeleton";
+import EditUserPage from "./edit-user/EditUserPage";
+import EditPostPage from "./edit-post/EditPostPage";
 export {
   GlobalLayout,
+  EditPostPage,
+  EditUserPage,
   UserCardSkeleton,
   PostSkeleton,
   CreatePost,

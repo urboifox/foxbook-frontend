@@ -6,7 +6,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { CreatePost, PostSkeleton } from "../";
 import { setPosts } from "../../redux/slices/postsSlice";
 export default function HomePage() {
-  // const [posts, setPosts] = useState([]);
   const posts = useSelector((state) => state.posts.data);
   const dispatch = useDispatch();
 

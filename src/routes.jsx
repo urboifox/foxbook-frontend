@@ -1,5 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 import {
+  EditPostPage,
+  EditUserPage,
   GlobalLayout,
   HomePage,
   LoginPage,
@@ -32,6 +34,14 @@ const router = createBrowserRouter([
       {
         path: "/users/:userId",
         element: <UserPage />,
+      },
+      {
+        path: "/users/edit/:userId",
+        element: <EditUserPage />,
+      },
+      {
+        path: "/posts/edit/:postId",
+        element: <EditPostPage />,
       },
     ],
   },

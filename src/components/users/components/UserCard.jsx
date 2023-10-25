@@ -4,10 +4,12 @@ import { useSelector } from "react-redux";
 import { CloseIcon } from "../../icons";
 import { useState } from "react";
 import axios from "axios";
+import changeUserRole from "../../../lib/handleUserRole";
 
 export default function UserCard({ user, fetchUsers }) {
   const isAdmin = useSelector((state) => state.user.data?.role === "admin");
   const [deleting, setDeleting] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const handleUserDelete = (userId) => {
     if (!deleting) {
@@ -28,10 +30,18 @@ export default function UserCard({ user, fetchUsers }) {
     }
   };
 
+  const handleUserRole = () => {
+    setLoading(true);
+    changeUserRole(user._id, user.role).finally(() => {
+      setLoading(false);
+      fetchUsers();
+    });
+  };
+
   return (
     <article
-      className={`${
-        deleting && "opacity-50"
+      className={`${deleting && "opacity-50"} ${
+        loading ? "opacity-30" : ""
       } relative p-4 rounded-md items-center text-center flex gap-2 flex-col group bg-neutral-800`}
     >
       {isAdmin && (
@@ -42,9 +52,24 @@ export default function UserCard({ user, fetchUsers }) {
           <CloseIcon className={`fill-white hover:fill-red-600 w-3`} />
         </span>
       )}
-      <span className="mb-2 bg-main-200 text-xs opacity-75 group-hover:opacity-100 transition-opacity duration-200 text-black px-4 rounded-sm capitalize">
+
+      <span
+        className={`mb-2 cursor-pointer ${
+          user.role === "admin" ? "bg-green-200" : "bg-main-200"
+        } text-xs opacity-75 group-hover:opacity-100 transition-opacity duration-200 text-black px-4 rounded-sm capitalize`}
+      >
         {user.role}
       </span>
+      {isAdmin && (
+        <span
+          onClick={handleUserRole}
+          className={`mb-2 cursor-pointer ${
+            user.role === "admin" ? "bg-main-200" : "bg-green-200"
+          } absolute opacity-0 text-xs group-hover:opacity-100 transition-opacity duration-200 text-black px-4 rounded-sm capitalize`}
+        >
+          {user.role === "admin" ? "Demote to user" : "Promote to admin"}
+        </span>
+      )}
       <Link
         className="flex flex-col items-center gap-2"
         to={`/users/${user._id}`}

@@ -5,15 +5,15 @@ const useForm = (initialState) => {
 
   const handleChange = (e) => {
     if (e.target.type === "file") {
-      setData({
-        ...data,
+      setData((prev) => ({
+        ...prev,
         [e.target.name]: e.target.files[0],
-      });
+      }));
     } else {
-      setData({
-        ...data,
+      setData((prev) => ({
+        ...prev,
         [e.target.name]: e.target.value,
-      });
+      }));
     }
   };
 
@@ -25,6 +25,7 @@ const useForm = (initialState) => {
     data,
     handleChange,
     resetForm,
+    setData,
   };
 };
 
