@@ -31,7 +31,7 @@ export default function RegisterForm() {
       })
       .then(() => toast.info(`Account created!`))
       .catch((err) => {
-        console.log(err.response.data.message);
+        console.log(err);
       })
       .finally(() => {
         setLoading(false);

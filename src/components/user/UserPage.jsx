@@ -21,7 +21,7 @@ export default function UserPage() {
       .then(({ data }) => data.data.user)
       .then((data) => setUser(data))
       .catch((err) => {
-        console.log(err.response.data.message);
+        console.log(err);
       });
   };
 

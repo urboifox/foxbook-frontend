@@ -32,7 +32,7 @@ export default function EditPostPage() {
           navigate("/");
         });
     } catch (err) {
-      console.log(err.response.data.message);
+      console.log(err);
     }
   };
 

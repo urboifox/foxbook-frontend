@@ -41,7 +41,7 @@ export default function EditUserPage() {
           imageRef.current.value = "";
         });
     } catch (err) {
-      console.log(err.response.data.message);
+      console.log(err);
     }
   };
 

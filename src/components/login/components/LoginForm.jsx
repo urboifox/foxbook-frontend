@@ -40,7 +40,7 @@ export default function LoginForm() {
         navigate("/");
       })
       .catch((err) => {
-        console.log(err.response.data.message);
+        console.log(err);
       })
       .finally(() => {
         setLoading(false);

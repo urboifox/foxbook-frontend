@@ -7,7 +7,6 @@ import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import "./Post.css";
 export default function Post({ post, fetchPosts }) {
-  // console.log(post);
   const [deleting, setDeleting] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const handlePostDelete = () => {

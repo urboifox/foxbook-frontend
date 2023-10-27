@@ -24,7 +24,7 @@ export default function UsersPage() {
       .then(({ data }) => data.data)
       .then((data) => handleSetUsers(data.users))
       .catch((err) => {
-        console.log(err.response.data.message);
+        console.log(err);
       });
   };
   useEffect(() => {

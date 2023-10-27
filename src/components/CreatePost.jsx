@@ -37,7 +37,7 @@ export default function CreatePost({ fetchPosts }) {
         toast.success(`Post created successfully`);
       })
       .catch((err) => {
-        console.log(err.response.data.message);
+        console.log(err);
         toast.error(`Error while creating post`);
       })
       .finally(() => {
