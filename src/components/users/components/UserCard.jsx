@@ -76,7 +76,7 @@ export default function UserCard({ user, fetchUsers }) {
       >
         <img
           className="w-20 aspect-square object-cover rounded-full"
-          src={`${API_LINK}/uploads/${user.avatar}`}
+          src={`${user.avatar}`}
         />
         <h2>{`${user.firstName} ${user.lastName}`}</h2>
       </Link>

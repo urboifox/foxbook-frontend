@@ -42,7 +42,7 @@ export default function UserPage() {
             {user.avatar ? (
               <img
                 className="rounded-md w-40 aspect-square object-cover"
-                src={`${API_LINK}/uploads/${user.avatar}`}
+                src={`${user.avatar}`}
                 alt={`${user.firstName} avatar`}
               />
             ) : (

@@ -58,7 +58,7 @@ export default function CreatePost({ fetchPosts }) {
         <Link to={`/users/${userData._id}`}>
           <img
             className="w-10 aspect-square rounded-full object-cover"
-            src={`${API_LINK}/uploads/${userData.avatar}`}
+            src={`${userData.avatar}`}
             alt={`${userData.firstName} image`}
           />
         </Link>

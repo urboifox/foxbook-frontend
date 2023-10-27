@@ -14,7 +14,11 @@ export default function Post({ post, fetchPosts }) {
     if (!deleting) {
       setDeleting(true);
       axios
-        .delete(`${API_LINK}/api/posts/${post._id}`)
+        .delete(`${API_LINK}/api/posts/${post._id}`, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("JWT")}`,
+          },
+        })
         .then(() => {
           if (fetchPosts) {
             fetchPosts();
@@ -42,7 +46,7 @@ export default function Post({ post, fetchPosts }) {
           <Link to={`/users/${post.user._id}`}>
             <img
               loading="lazy"
-              src={`${API_LINK}/uploads/${post.user.avatar}`}
+              src={`${post.user.avatar}`}
               alt={`${post.user.firstName} avatar`}
               className="w-10 aspect-square object-cover rounded-full"
             />
@@ -86,7 +90,7 @@ export default function Post({ post, fetchPosts }) {
             onClick={() => setModalOpen(true)}
             className="mt-5 rounded-md h-60 w-full object-cover"
             loading="lazy"
-            src={`${API_LINK}/uploads/${post.image}`}
+            src={`${post.image}`}
             alt={`${post.title} image`}
           />
         )}
@@ -101,7 +105,7 @@ export default function Post({ post, fetchPosts }) {
             <img
               onClick={() => setModalOpen(false)}
               className="max-w-full"
-              src={`${API_LINK}/uploads/${post.image}`}
+              src={`${post.image}`}
               alt={`${post.title} image`}
             />
           </div>
