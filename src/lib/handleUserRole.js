@@ -15,7 +15,7 @@ const changeUserRole = async (id, role) => {
       }
     )
     .catch((err) => {
-      console.log(err.response.data.message);
+      console.log(err);
     });
 };
 

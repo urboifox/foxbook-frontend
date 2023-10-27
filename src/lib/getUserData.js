@@ -11,7 +11,7 @@ const getUserData = async () => {
     })
     .then((res) => res.data.data.user)
     .catch((error) => {
-      console.log(error.response.data.message);
+      console.log(error);
     });
 };
 
